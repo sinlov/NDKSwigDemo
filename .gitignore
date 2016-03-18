@@ -42,8 +42,6 @@ proguard/
 .gradle
 build/
 gradle.bat
-gradlew
-gradlew.bat
 gradle.properties
 
 # Ignore Gradle GUI config
