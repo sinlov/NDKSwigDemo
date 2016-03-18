@@ -1,0 +1,4 @@
+/build
+
+# For jni build
+/src/main/obj

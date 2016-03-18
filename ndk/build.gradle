@@ -1,0 +1,79 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0.0"
+
+//        ndk {
+//            moduleName "SeePlusPlus" // Name of C++ module (i.e. libSeePlusPlus)
+//            cFlags "-std=c++11 -fexceptions" // Add provisions to allow C++11 functionality
+//            stl "gnustl_shared" // Which STL library to use: gnustl or stlport
+//        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            //Disable automatic ndk-build call
+            jniLibs.srcDirs 'src/main/libs'
+            jni.srcDirs = []
+        }
+    }
+
+    task ndkBuild(type: Exec) {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("windows")) {
+            workingDir '/src/main/jni'
+            commandLine 'cmd', '/c', 'ndk-build'
+        }
+        else {
+            def command = properties.getProperty('ndk.dir', null) + '/ndk-build'
+            commandLine command, '-C', file('src/main/jni').absolutePath
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn ndkBuild
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+//    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+}
+
+// Location of where to store the jni wrapped files
+def coreWrapperDir = new File("${projectDir}/src/main/java/com/sinlov/jni/core")
+task createCoreWrapperDir {
+    coreWrapperDir.mkdirs()
+}
+
+// For this to work, it's assumed SWIG is installed
+// TODO: This only works when called from Command Line (gradlew runSwig)
+task runSwig(type:Exec, dependsOn: ['createCoreWrapperDir']) {
+
+    String osName = System.getProperty("os.name").toLowerCase();
+    if (osName.contains("windows")) {
+        workingDir '/src/main/jni'   // This implicitly starts from $(projectDir) evidently
+        commandLine 'cmd', '/c', 'swig'
+        args '-c++', '-java', '-package', 'com.sureshjoshi.core', '-outdir', coreWrapperDir.absolutePath, 'SeePlusPlus.i'
+    }
+    else {
+        commandLine 'swig'
+        args '-c++', '-java', '-package', 'com.sureshjoshi.core', '-outdir', coreWrapperDir.absolutePath, "${projectDir}/src/main/jni/SeePlusPlus.i"
+    }
+
+}
