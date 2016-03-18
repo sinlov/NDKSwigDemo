@@ -69,11 +69,11 @@ task runSwig(type:Exec, dependsOn: ['createCoreWrapperDir']) {
     if (osName.contains("windows")) {
         workingDir '/src/main/jni'   // This implicitly starts from $(projectDir) evidently
         commandLine 'cmd', '/c', 'swig'
-        args '-c++', '-java', '-package', 'com.sureshjoshi.core', '-outdir', coreWrapperDir.absolutePath, 'SeePlusPlus.i'
+        args '-c++', '-java', '-package', 'com.sinlov.jni.core', '-outdir', coreWrapperDir.absolutePath, 'SeePlusPlus.i'
     }
     else {
         commandLine 'swig'
-        args '-c++', '-java', '-package', 'com.sureshjoshi.core', '-outdir', coreWrapperDir.absolutePath, "${projectDir}/src/main/jni/SeePlusPlus.i"
+        args '-c++', '-java', '-package', 'com.sinlov.jni.core', '-outdir', coreWrapperDir.absolutePath, "${projectDir}/src/main/jni/SeePlusPlus.i"
     }
 
 }
