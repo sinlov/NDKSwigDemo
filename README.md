@@ -5,6 +5,15 @@
 * android-sdk build-tools 23.0.2 API-23 ++
 * andorid-ndk r10e ++
 * swig 3.0.8
+* gradle 2.4+
+
+
+## Using is at first
+
+```sh
+cd [ProjectRootPath]
+./gradlew runSwig
+```
 
 ## must be config file
 

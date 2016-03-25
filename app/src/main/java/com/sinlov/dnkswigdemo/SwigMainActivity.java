@@ -1,16 +1,24 @@
 package com.sinlov.dnkswigdemo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class SwigMainActivity extends AppCompatActivity {
+
+    @Bind(R.id.tv_main_act_info)
+    TextView tvMainActInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swig_main);
+        ButterKnife.bind(this);
     }
 
     @Override
