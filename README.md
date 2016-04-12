@@ -49,8 +49,8 @@ if [ -f "$LOCAL_PRO" ]; then
 	else
 		cat > $LOCAL_PRO << EOF
 # Please set your config path after this
-ndk.dir=/Users/sinlov/opt/android-ndk/android-ndk-r10e
 sdk.dir=/Users/sinlov/opt/android-sdk
+ndk.dir=/Users/sinlov/opt/android-ndk/android-ndk-r10e
 EOF
 echo ">> create $LOCAL_PRO finish"
 fi
