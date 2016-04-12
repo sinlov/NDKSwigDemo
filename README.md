@@ -22,8 +22,8 @@ add file `local.properties` at project root path
 and set your sdk and ndk path
 
 ```properties
-ndk.dir=/Users/sinlov/opt/android-ndk/android-ndk-r10e
 sdk.dir=/Users/sinlov/opt/android-sdk
+ndk.dir=/Users/sinlov/opt/android-ndk/android-ndk-r10e
 ```
 
 If gradle need config, you can use like this
